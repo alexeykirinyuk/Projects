@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Projects.DataTypes
 {
+    [Table("PersonsBase")]
     public class Person
     {
         [Key]

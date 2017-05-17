@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Projects.DataTypes
 {
+    [Table("ProjectsBase")]
     public class Project
     {
         [Key]
@@ -15,11 +16,11 @@ namespace Projects.DataTypes
         public string ConstractorCompany { get; set; }
 
         [ForeignKey("Employee")]
-        public long EmployeeId { get; set; }
+        public long? EmployeeId { get; set; }
         public virtual Person Employee { get; set; }
 
         [ForeignKey("Leader")]
-        public long LeaderId { get; set; }
+        public long? LeaderId { get; set; }
         public virtual Person Leader { get; set; }
 
         public virtual IEnumerable<Person> Contractors { get; set; }
