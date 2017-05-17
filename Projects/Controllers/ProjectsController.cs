@@ -1,16 +1,16 @@
-﻿using Projects.DataTypes;
-using Projects.Managers;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Projects.Managers;
 using System.Web.Mvc;
 
 namespace Projects.Server.Controllers
 {
     public class ProjectsController : Controller
     {
-        public ActionResult Index() => View();
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var manager = new ProjectsManager();
 
-        public IEnumerable<Project> GetAll() => new ProjectsManager().GetAll();
-
+            return View(manager.GetAll());
+        }
     }
 }

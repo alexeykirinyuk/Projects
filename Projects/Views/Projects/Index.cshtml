@@ -1,17 +1,44 @@
-﻿<html>
-<head>
-    <meta charset="utf-8">
-    <title>Projects</title>
-    <script src="../../Scripts/jquery-1.10.2.min.js"></script>
-    <script src="../../Scripts/bootstrap.min.js"></script>
-</head>
-<body onload="load()">
-    <h>Projects</h>
-    <script>
-        function load()
+﻿<script src="~/Scripts/projects.js"></script>
+
+@model IEnumerable<Projects.DataTypes.Project>
+
+@using (Html.BeginForm())
+{
+    <button type="button" class="btn" href="http://localhost:56257/Projects/Add">Add project</button>
+
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Customer company</th>
+            <th>Constractor company</th>
+            <th>Employee</th>
+            <th>Leader</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Priority</th>
+            <th>Comment</th>
+        </tr>
+        @foreach (var element in Model)
         {
-            
+            <tr id="@element.Id">
+                <td>@element.Id</td>
+                <td id="Name">@element.Name</td>
+                <td id="CustomerCompany">@element.CustomerCompany</td>
+                <td id="ConstractorCompany">@element.ConstractorCompany</td>
+                <td>@element.Employee.FirstName</td>
+                <td>@element.Leader.LastName</td>
+                <td id="Start">@element.Start</td>
+                <td id="End">@element.End</td>
+                <td id="Priority">@element.Priority</td>
+                <td id="Comment">@element.Comment</td>
+                <td>
+                    <button type="button" class="btn-warning" onclick="editProject(@element.Id)">Edit</button>
+                </td>
+                <td>
+                    <button type="button" class="btn-danger" onclick="removeProject(@element.Id)">Remove</button>
+                </td>
+            </tr>
         }
-    </script>
-</body>
-</html>
+    </table>
+}
