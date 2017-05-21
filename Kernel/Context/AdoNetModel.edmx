@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Projects.DataTypes.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ProjectsBase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="CustomerCompany" Type="nvarchar(max)" />
+          <Property Name="ConstractorCompany" Type="nvarchar(max)" />
+          <Property Name="EmployeeId" Type="bigint" />
+          <Property Name="LeaderId" Type="bigint" />
+          <Property Name="Start" Type="datetime" Nullable="false" />
+          <Property Name="End" Type="datetime" Nullable="false" />
+          <Property Name="Priority" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ProjectsWorkersBase">
+          <Key>
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="WorkerId" />
+          </Key>
+          <Property Name="ProjectId" Type="bigint" Nullable="false" />
+          <Property Name="WorkerId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkersBase">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="MiddleName" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Project_Id" Type="bigint" />
+        </EntityType>
+        <Association Name="FK_dbo_ProjectsBase_dbo_WorkersBase_EmployeeId">
+          <End Role="WorkersBase" Type="Self.WorkersBase" Multiplicity="0..1" />
+          <End Role="ProjectsBase" Type="Self.ProjectsBase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkersBase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectsBase">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProjectsBase_dbo_WorkersBase_LeaderId">
+          <End Role="WorkersBase" Type="Self.WorkersBase" Multiplicity="0..1" />
+          <End Role="ProjectsBase" Type="Self.ProjectsBase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkersBase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectsBase">
+              <PropertyRef Name="LeaderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectsBase">
+          <End Role="ProjectsBase" Type="Self.ProjectsBase" Multiplicity="1" />
+          <End Role="ProjectsWorkersBase" Type="Self.ProjectsWorkersBase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectsBase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectsWorkersBase">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkersBase">
+          <End Role="WorkersBase" Type="Self.WorkersBase" Multiplicity="1" />
+          <End Role="ProjectsWorkersBase" Type="Self.ProjectsWorkersBase" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkersBase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectsWorkersBase">
+              <PropertyRef Name="WorkerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectsDataTypesStoreContainer">
+          <EntitySet Name="ProjectsBase" EntityType="Self.ProjectsBase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectsWorkersBase" EntityType="Self.ProjectsWorkersBase" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkersBase" EntityType="Self.WorkersBase" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_ProjectsBase_dbo_WorkersBase_EmployeeId" Association="Self.FK_dbo_ProjectsBase_dbo_WorkersBase_EmployeeId">
+            <End Role="WorkersBase" EntitySet="WorkersBase" />
+            <End Role="ProjectsBase" EntitySet="ProjectsBase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProjectsBase_dbo_WorkersBase_LeaderId" Association="Self.FK_dbo_ProjectsBase_dbo_WorkersBase_LeaderId">
+            <End Role="WorkersBase" EntitySet="WorkersBase" />
+            <End Role="ProjectsBase" EntitySet="ProjectsBase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectsBase" Association="Self.FK_ProjectsBase">
+            <End Role="ProjectsBase" EntitySet="ProjectsBase" />
+            <End Role="ProjectsWorkersBase" EntitySet="ProjectsWorkersBase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkersBase" Association="Self.FK_WorkersBase">
+            <End Role="WorkersBase" EntitySet="WorkersBase" />
+            <End Role="ProjectsWorkersBase" EntitySet="ProjectsWorkersBase" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Projects.DataTypes" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerCompany" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ConstractorCompany" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeId" Type="Int64" />
+          <Property Name="LeaderId" Type="Int64" />
+          <Property Name="Start" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="End" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Priority" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_dbo_ProjectsBase_dbo_WorkersBase_EmployeeId" FromRole="ProjectsBase" ToRole="WorkersBase" />
+          <NavigationProperty Name="Leader" Relationship="Self.FK_dbo_ProjectsBase_dbo_WorkersBase_LeaderId" FromRole="ProjectsBase" ToRole="WorkersBase" />
+          <NavigationProperty Name="Workers" Relationship="Self.ProjectsWorkersBase" FromRole="ProjectsBase" ToRole="WorkersBase" />
+        </EntityType>
+        <EntityType Name="Worker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Project_Id" Type="Int64" />
+          <NavigationProperty Name="ProjectEmployee" Relationship="Self.FK_dbo_ProjectsBase_dbo_WorkersBase_EmployeeId" FromRole="WorkersBase" ToRole="ProjectsBase" />
+          <NavigationProperty Name="ProjectLeader" Relationship="Self.FK_dbo_ProjectsBase_dbo_WorkersBase_LeaderId" FromRole="WorkersBase" ToRole="ProjectsBase" />
+          <NavigationProperty Name="ProjectWoker" Relationship="Self.ProjectsWorkersBase" FromRole="WorkersBase" ToRole="ProjectsBase" />
+        </EntityType>
+        <Association Name="FK_dbo_ProjectsBase_dbo_WorkersBase_EmployeeId">
+          <End Role="WorkersBase" Type="Projects.DataTypes.Worker" Multiplicity="0..1" />
+          <End Role="ProjectsBase" Type="Projects.DataTypes.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkersBase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectsBase">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProjectsBase_dbo_WorkersBase_LeaderId">
+          <End Role="WorkersBase" Type="Projects.DataTypes.Worker" Multiplicity="0..1" />
+          <End Role="ProjectsBase" Type="Projects.DataTypes.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkersBase">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectsBase">
+              <PropertyRef Name="LeaderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProjectsWorkersBase">
+          <End Role="ProjectsBase" Type="Projects.DataTypes.Project" Multiplicity="*" />
+          <End Role="WorkersBase" Type="Projects.DataTypes.Worker" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ProjectsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ProjectsBase" EntityType="Projects.DataTypes.Project" />
+          <EntitySet Name="WorkersBase" EntityType="Projects.DataTypes.Worker" />
+          <AssociationSet Name="FK_dbo_ProjectsBase_dbo_WorkersBase_EmployeeId" Association="Self.FK_dbo_ProjectsBase_dbo_WorkersBase_EmployeeId">
+            <End Role="WorkersBase" EntitySet="WorkersBase" />
+            <End Role="ProjectsBase" EntitySet="ProjectsBase" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProjectsBase_dbo_WorkersBase_LeaderId" Association="Self.FK_dbo_ProjectsBase_dbo_WorkersBase_LeaderId">
+            <End Role="WorkersBase" EntitySet="WorkersBase" />
+            <End Role="ProjectsBase" EntitySet="ProjectsBase" />
+          </AssociationSet>
+          <AssociationSet Name="ProjectsWorkersBase" Association="Self.ProjectsWorkersBase">
+            <End Role="ProjectsBase" EntitySet="ProjectsBase" />
+            <End Role="WorkersBase" EntitySet="WorkersBase" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjectsDataTypesStoreContainer" CdmEntityContainer="ProjectsEntities">
+          <EntitySetMapping Name="ProjectsBase">
+            <EntityTypeMapping TypeName="Projects.DataTypes.Project">
+              <MappingFragment StoreEntitySet="ProjectsBase">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CustomerCompany" ColumnName="CustomerCompany" />
+                <ScalarProperty Name="ConstractorCompany" ColumnName="ConstractorCompany" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="LeaderId" ColumnName="LeaderId" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="End" ColumnName="End" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkersBase">
+            <EntityTypeMapping TypeName="Projects.DataTypes.Worker">
+              <MappingFragment StoreEntitySet="WorkersBase">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Project_Id" ColumnName="Project_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ProjectsWorkersBase" TypeName="Projects.DataTypes.ProjectsWorkersBase" StoreEntitySet="ProjectsWorkersBase">
+            <EndProperty Name="ProjectsBase">
+              <ScalarProperty Name="Id" ColumnName="ProjectId" />
+            </EndProperty>
+            <EndProperty Name="WorkersBase">
+              <ScalarProperty Name="Id" ColumnName="WorkerId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

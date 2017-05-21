@@ -49,15 +49,12 @@
   <ItemGroup>
     <Compile Include="ProjectsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkersManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Context\Context.csproj">
       <Project>{6efa02cc-7e6b-45cd-a0f5-23665fbb149b}</Project>
       <Name>Context</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataTypes\DataTypes.csproj">
-      <Project>{2db6ed7f-9f5c-4258-b143-d1b862cbed4a}</Project>
-      <Name>DataTypes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

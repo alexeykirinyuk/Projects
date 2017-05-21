@@ -54,6 +54,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,23 +64,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CurrentContext.cs" />
-    <Compile Include="Migrations\201705171126078_Init.cs" />
-    <Compile Include="Migrations\201705171126078_Init.Designer.cs">
-      <DependentUpon>201705171126078_Init.cs</DependentUpon>
+    <Compile Include="AdoNetModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdoNetModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="AdoNetModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdoNetModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdoNetModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AdoNetModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Project.cs">
+      <DependentUpon>AdoNetModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Worker.cs">
+      <DependentUpon>AdoNetModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="AdoNetModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AdoNetModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="AdoNetModel.edmx.diagram">
+      <DependentUpon>AdoNetModel.edmx</DependentUpon>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DataTypes\DataTypes.csproj">
-      <Project>{2db6ed7f-9f5c-4258-b143-d1b862cbed4a}</Project>
-      <Name>DataTypes</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">
@@ -93,9 +111,19 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705171126078_Init.resx">
-      <DependentUpon>201705171126078_Init.cs</DependentUpon>
-    </EmbeddedResource>
+    <Content Include="AdoNetModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdoNetModel.edmx</DependentUpon>
+      <LastGenOutput>AdoNetModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="AdoNetModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AdoNetModel.edmx</DependentUpon>
+      <LastGenOutput>AdoNetModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

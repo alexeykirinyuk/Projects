@@ -113,12 +113,14 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\projects.js" />
+    <Content Include="Scripts\script.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ConstructorsController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -131,6 +133,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
+    <Content Include="Views\Workers\Index.cshtml" />
+    <Content Include="Views\Projects\NotFound.cshtml" />
+    <Content Include="Views\Projects\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -141,15 +146,12 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Kernel\Context\Context.csproj">
       <Project>{6efa02cc-7e6b-45cd-a0f5-23665fbb149b}</Project>
       <Name>Context</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Kernel\DataTypes\DataTypes.csproj">
-      <Project>{2db6ed7f-9f5c-4258-b143-d1b862cbed4a}</Project>
-      <Name>DataTypes</Name>
     </ProjectReference>
     <ProjectReference Include="..\Kernel\Managers\Managers.csproj">
       <Project>{9b15cd3f-d05a-4d30-8d58-7def90a5f36e}</Project>
