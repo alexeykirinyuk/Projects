@@ -67,8 +67,8 @@ function sort(row)
         {
             shouldSwitch = false;
 
-            x = rows[i].getElementsByTagName("TD")[0];
-            y = rows[i + 1].getElementsByTagName("TD")[0];
+            x = rows[i].getElementsByTagName("TD")[3];
+            y = rows[i + 1].getElementsByTagName("TD")[3];
 
             if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase())
             {

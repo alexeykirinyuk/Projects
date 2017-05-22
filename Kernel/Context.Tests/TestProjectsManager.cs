@@ -13,7 +13,7 @@ namespace Kernel.Tests
         {
             var all = ProjectsManager.GetAll();
             Assert.IsNotNull(all);
-            Assert.AreEqual(2, all.Count());
+            AssertCount(2, all);
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace Kernel.Tests
             Assert.AreEqual(added.Name, project.Name);
             Assert.AreEqual(added.CustomerCompany, project.CustomerCompany);
             Assert.AreEqual(added.ConstractorCompany, project.ConstractorCompany);
-            Assert.AreEqual(added.Workers.Count(), project.Workers.Count());
+            AssertCount(added.Workers.Count(), project.Workers);
         }
         [TestMethod]
         public void Update()
@@ -64,19 +64,19 @@ namespace Kernel.Tests
 
             ProjectsManager.Update(Project1);
 
-            Assert.AreEqual(2, ProjectsManager.GetAll().Count());
+            AssertCount(2, ProjectsManager.GetAll());
 
             var element = ProjectsManager.Find(Project1.Id);
             Assert.AreEqual(Project1.Name, element.Name);
             Assert.AreEqual(Project1.EmployeeId, element.EmployeeId);
             Assert.AreEqual(Project1.LeaderId, element.LeaderId);
-            Assert.AreEqual(Project1.WorkerIds.Count(), element.Workers.Count());
+            AssertCount(Project1.WorkerIds.Count(), element.Workers);
 
             Project1.WorkerIds.RemoveAt(0);
             ProjectsManager.Update(Project1);
             element = ProjectsManager.Find(Project1.Id);
 
-            Assert.AreEqual(Project1.WorkerIds.Count(), element.Workers.Count());
+            AssertCount(Project1.WorkerIds.Count(), element.Workers);
         }
         [TestMethod]
         public void Remove()

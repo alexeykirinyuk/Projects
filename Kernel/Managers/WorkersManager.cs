@@ -1,31 +1,42 @@
 ﻿using Projects.Context;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 namespace Projects.Managers
 {
-    public class WorkersManager : IManager<Worker>
+    public class WorkersManager : BaseManager<Worker>
     {
+        protected override string Tag => "WorkersManager";
+
         public WorkersManager() { }
 
-        public IEnumerable<Worker> GetAll() => Operation(context => context.WorkersBase.ToList());
-        public Worker Find(long id) => Operation(context => context.WorkersBase.FirstOrDefault(w => id == w.Id));
+        public override IEnumerable<Worker> GetAll() => WOperation(context => context.WorkersBase.ToList());
+        public override Worker Find(long id) => WOperation(context => context.WorkersBase.FirstOrDefault(w => id == w.Id));
 
-        public Worker Add(Worker worker) => Operation(context => context.WorkersBase.Add(worker));
-        public Worker Update(Worker worker)
+        public override Worker Add(Worker worker)
         {
-            return Operation(context =>
+            var result = WOperation<Worker>(context => context.WorkersBase.Add(worker));
+
+            ManagerFactory.Logger.Info(Tag, $"Add new worker #{result.Id}");
+
+            return result;
+        }
+        public override Worker Update(Worker worker)
+        {
+            var result = WOperation<Worker>(context =>
             {
                 var entity = context.WorkersBase.Find(worker.Id);
 
                 return entity.Update(worker);
             });
+
+            ManagerFactory.Logger.Info(Tag, $"Update worker #{worker.Id}");
+
+            return result;
         }
-        public Worker Remove(long id)
+        public override Worker Remove(long id)
         {
-            return Operation(context =>
+            var result = WOperation<Worker>(context =>
             {
                 var remove = context.WorkersBase.FirstOrDefault(w => id == w.Id);
 
@@ -53,17 +64,8 @@ namespace Projects.Managers
 
                 return context.WorkersBase.Remove(remove);
             });
-        }
 
-        private TDataType Operation<TDataType>(Func<ProjectsEntities, TDataType> action)
-        {
-            var result = default(TDataType);
-
-            using (var context = new ProjectsEntities())
-            {
-                result = action(context);
-                context.SaveChanges();
-            }
+            ManagerFactory.Logger.Info(Tag, $"Remove worker #{id}");
 
             return result;
         }

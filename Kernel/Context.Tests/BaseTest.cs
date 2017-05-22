@@ -3,6 +3,7 @@ using Projects.Context;
 using Projects.Managers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Kernel.Tests
 {
@@ -45,6 +46,7 @@ namespace Kernel.Tests
 
             ProjectsManager = ManagerFactory.Get<Project>();
             WorkersManager = ManagerFactory.Get<Worker>();
+            ManagerFactory.Debug = true;
         }
 
         [TestInitialize]
@@ -71,9 +73,7 @@ namespace Kernel.Tests
             Start();
         }
 
-        protected virtual void Start()
-        {
-
-        }
+        protected virtual void Start() { }
+        protected void AssertCount<TDataType>(int count, IEnumerable<TDataType> list) => Assert.AreEqual(count, list.Count());
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Projects.Context;
-using Projects.Managers;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Kernel.Tests
 {
@@ -13,7 +12,7 @@ namespace Kernel.Tests
         {
             var all = WorkersManager.GetAll();
             Assert.IsNotNull(all);
-            Assert.AreEqual(2, all.Count());
+            AssertCount(2, all);
         }
 
         [TestMethod]
@@ -41,6 +40,20 @@ namespace Kernel.Tests
             Assert.AreEqual(added.LastName, worker.LastName);
             Assert.AreEqual(added.MiddleName, worker.MiddleName);
             Assert.AreEqual(added.Email, worker.Email);
+
+            AssertCount(3, WorkersManager.GetAll());
+
+            var project = new Project("name", "c", "cons")
+            {
+                Leader = Worker1,
+                Employee = added,
+                Workers = new List<Worker>() { added, Worker1, Worker2 }
+            };
+
+            ProjectsManager.Add(project);
+
+            AssertCount(3, WorkersManager.GetAll());
+            AssertCount(3, ProjectsManager.GetAll());
         }
 
         [TestMethod]

@@ -65,5 +65,18 @@ namespace Projects.Context
 
             return this;
         }
+        public void ClearWorkers()
+        {
+            Workers = new HashSet<Worker>();
+        }
+        public Project AddWorkers(params Worker[] workers)
+        {
+            foreach (var worker in workers)
+            {
+                Workers.Add(worker);
+            }
+
+            return this;
+        }
     }
 }

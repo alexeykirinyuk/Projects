@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseManager.cs" />
     <Compile Include="IManager.cs" />
+    <Compile Include="Logging\Log.cs" />
     <Compile Include="ManagerType.cs" />
     <Compile Include="ManagerFactory.cs" />
     <Compile Include="ProjectsManager.cs" />

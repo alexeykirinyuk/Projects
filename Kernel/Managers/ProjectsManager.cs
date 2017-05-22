@@ -6,23 +6,45 @@ using System.Linq;
 
 namespace Projects.Managers
 {
-    public class ProjectsManager : IManager<Project>
+    public class ProjectsManager : BaseManager<Project>
     {
+        protected override string Tag => "ProjectsManager";
+
         public ProjectsManager() { }
 
-        public IEnumerable<Project> GetAll() => OperationGet((projects) => projects.ToList());
-        public Project Find(long id)
-        {
-            return OperationGet(projects =>
-            {
-                return projects.FirstOrDefault(p => id == p.Id);
-            });
-        }
+        public override IEnumerable<Project> GetAll() => WOperationGet((projects) => projects.ToList());
+        public override Project Find(long id) => WOperationGet(projects => projects.FirstOrDefault(p => id == p.Id));
 
-        public Project Add(Project project) => OperationSet(context => context.ProjectsBase.Add(project));
-        public Project Update(Project project)
+        public override Project Add(Project project)
         {
-            return OperationSet(context =>
+            var result = WOperation(context =>
+            {
+                project.Employee = context.WorkersBase.Find(project.EmployeeId);
+                project.Leader = context.WorkersBase.Find(project.LeaderId);
+
+                var ids = project.Workers.Select(w => w.Id);
+                project.ClearWorkers();
+
+                foreach (var id in ids)
+                {
+                    var worker = context.WorkersBase.Find(id);
+
+                    if (null != worker)
+                    {
+                        project.AddWorkers(worker);
+                    }
+                }
+
+                return context.ProjectsBase.Add(project);
+            });
+
+            ManagerFactory.Logger.Info(Tag, $"Add new project #{result.Id}");
+
+            return result;
+        }
+        public override Project Update(Project project)
+        {
+            var result = WOperation(context =>
             {
                 var entity = context.ProjectsBase.Find(project.Id);
                 entity.Update(project);
@@ -38,10 +60,14 @@ namespace Projects.Managers
 
                 return entity;
             });
+
+            ManagerFactory.Logger.Info(Tag, $"Update project #{result.Id}");
+
+            return result;
         }
-        public Project Remove(long id)
+        public override Project Remove(long id)
         {
-            return OperationSet(context =>
+            var result = WOperation(context =>
             {
                 var element = context.ProjectsBase.Find(id);
 
@@ -53,9 +79,13 @@ namespace Projects.Managers
 
                 return context.ProjectsBase.Remove(element);
             });
+
+            ManagerFactory.Logger.Info(Tag, $"Remove project #{id}");
+
+            return result;
         }
 
-        private TDataType OperationGet<TDataType>(Func<IEnumerable<Project>, TDataType> action)
+        private TDataType WOperationGet<TDataType>(Func<IEnumerable<Project>, TDataType> action)
         {
             var result = default(TDataType);
 
@@ -67,18 +97,6 @@ namespace Projects.Managers
                     .Include(p => p.Workers);
 
                 result = action(projects);
-            }
-
-            return result;
-        }
-        private TDataType OperationSet<TDataType>(Func<ProjectsEntities, TDataType> action)
-        {
-            var result = default(TDataType);
-
-            using (var context = new ProjectsEntities())
-            {
-                result = action(context);
-                context.SaveChanges();
             }
 
             return result;
