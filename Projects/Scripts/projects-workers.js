@@ -37,13 +37,17 @@ function detailsProject(id)
 
 function createWorker()
 {
-    href("Worker/Create");
+    href("Workers/Create");
 }
 function editWorker(id)
 {
-    href("Worker/Edit?id=" + id);
+    href("Workers/Edit?id=" + id);
+}
+function detailsWorker(id)
+{
+    href("Workers/Details?id=" + id);
 }
 function removeWorker(id)
 {
-    href("Worker/Remove?id=" + id);
+    href("Workers/Remove?id=" + id);
 }

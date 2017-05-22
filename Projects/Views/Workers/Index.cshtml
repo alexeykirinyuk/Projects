@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Projects.Context.Worker>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <button class="btn-success" onclick="createWorker()">Create new</button>
 </p>
 <table class="table">
     <tr>
@@ -19,8 +19,7 @@
         <td>@item.FirstName</td>
         <td>@item.LastName</td>
         <td>@item.MiddleName</td>
-        <td>@item.Email)</td>
-        <td>
+        <td>@item.Email</td>
         <td>
             <button class="btn-info" onclick="detailsWorker(@item.Id)">Details</button>
         </td>
@@ -30,8 +29,6 @@
         <td>
             <button class="btn-danger" onclick="removeWorker(@item.Id)">Remove</button>
         </td>
-
     </tr>
 }
-
 </table>

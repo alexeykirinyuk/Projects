@@ -52,7 +52,7 @@ namespace Projects.Server.Controllers
                 return RedirectNotFound();
             }
 
-            _projects.Remove(id);
+            _workers.Remove(id);
 
             return RedirectIndex();
         }
