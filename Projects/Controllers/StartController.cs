@@ -2,8 +2,9 @@
 
 namespace Projects.Server.Controllers
 {
-    public class ConstructorsController : Controller
+    public class StartController : Controller
     {
+        [HttpGet]
         public ActionResult Index()
         {
             return View();

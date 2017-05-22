@@ -43,7 +43,15 @@ namespace Projects.Managers
         {
             return OperationSet(context =>
             {
-                return context.ProjectsBase.Remove(context.ProjectsBase.Find(id));
+                var element = context.ProjectsBase.Find(id);
+
+                element.Employee = null;
+                element.Leader = null;
+                element.Workers.Clear();
+
+                context.SaveChanges();
+
+                return context.ProjectsBase.Remove(element);
             });
         }
 

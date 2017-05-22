@@ -1,0 +1,30 @@
+﻿@model Projects.Context.Worker
+
+@using (Html.BeginForm("Update", "Workers", new { Id = Model.Id }, FormMethod.Post))
+{
+    <div class="form-horizontal">
+        <h4>Worker</h4>
+        <hr />
+
+        <div class="form-group">
+            <label>First name</label>
+            <input name="FirstName" class="form-control" type="text" value="@Model.FirstName" />
+        </div>
+        <div class="form-group">
+            <label>First name</label>
+            <input name="LastName" class="form-control" type="text" value="@Model.LastName" />
+        </div>
+        <div class="form-group">
+            <label>Middle name</label>
+            <input name="MiddleName" class="form-control" type="text" value="@Model.MiddleName" />
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input name="Email" class="form-control" type="text" value="@Model.Email" />
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn-success">Save</button>
+        </div>
+    </div>
+}

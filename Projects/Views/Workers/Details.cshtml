@@ -1,0 +1,23 @@
+﻿@model Projects.Context.Worker
+
+<div>
+    <h4>Worker</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>First name</dt>
+        <dd>@Model.FirstName</dd>
+
+        <dt>Last name</dt>
+        <dd>@Model.LastName</dd>
+
+        <dt>MiddleName<dt>
+        <dd>@Model.MiddleName</dd>
+
+        <dt>Email</dt>
+        <dd>@Model.Email</dd>
+    </dl>
+</div>
+<p>
+    <button class="btn-warning" onclick="editProject(@Model.Id)">Edit</button>
+    <button class="btn-success" onclick="backToList()">Back</button>
+</p>

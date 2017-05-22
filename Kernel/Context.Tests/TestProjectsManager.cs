@@ -78,5 +78,11 @@ namespace Kernel.Tests
 
             Assert.AreEqual(Project1.WorkerIds.Count(), element.Workers.Count());
         }
+        [TestMethod]
+        public void Remove()
+        {
+            ProjectsManager.Remove(Project1.Id);
+            Assert.AreEqual(1, ProjectsManager.GetAll().Count());
+        }
     }
 }

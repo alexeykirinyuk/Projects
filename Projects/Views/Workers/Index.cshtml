@@ -1,2 +1,37 @@
-﻿@model Projects.DataTypes.Person
+﻿@model IEnumerable<Projects.Context.Worker>
 
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Middle name</th>
+        <th>Email</th>
+        <th>Details</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>@item.FirstName</td>
+        <td>@item.LastName</td>
+        <td>@item.MiddleName</td>
+        <td>@item.Email)</td>
+        <td>
+        <td>
+            <button class="btn-info" onclick="detailsWorker(@item.Id)">Details</button>
+        </td>
+        <td>
+            <button class="btn-warning" onclick="editWorker(@item.Id)">Edit</button>
+        </td>
+        <td>
+            <button class="btn-danger" onclick="removeWorker(@item.Id)">Remove</button>
+        </td>
+
+    </tr>
+}
+
+</table>

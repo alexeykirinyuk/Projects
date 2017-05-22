@@ -1,57 +1,53 @@
 ﻿using Projects.Context;
-using Projects.Managers;
 using System.Web.Mvc;
 
 namespace Projects.Server.Controllers
 {
-    public class ProjectsController : BaseController
+    public class WorkersController : BaseController
     {
         [HttpGet]
         public ActionResult Index()
         {
-            return View(_projects.GetAll());
+            return View(_workers.GetAll());
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            var project = new Project();
+            var worker = new Worker();
 
-            project = _projects.Add(project);
-            ViewBag.AllWorkers = _workers.GetAll();
+            worker = _workers.Add(worker);
 
-            return View(_editAction, project);
+            return View(_editAction, worker);
         }
         [HttpGet]
         public ActionResult Edit(long id)
         {
-            var model = _projects.Find(id);
+            var worker = _workers.Find(id);
 
-            if (null == model)
+            if (null == worker)
             {
                 return RedirectNotFound();
             }
 
-            ViewBag.AllWorkers = _workers.GetAll();
-
-            return View(model);
+            return View(worker);
         }
         [HttpGet]
         public ActionResult Details(long id)
         {
-            var model = _projects.Find(id);
+            var worker = _workers.Find(id);
 
-            if (null == model)
+            if (null == worker)
             {
                 return RedirectNotFound();
             }
 
-            return View(model);
+            return View(worker);
         }
         [HttpGet]
         public ActionResult Remove(long id)
         {
-            if (null == _projects.Find(id))
+            if (null == _workers.Find(id))
             {
                 return RedirectNotFound();
             }
@@ -62,9 +58,9 @@ namespace Projects.Server.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(Project project)
+        public ActionResult Update(Worker worker)
         {
-            _projects.Update(project);
+            _workers.Update(worker);
 
             return RedirectIndex();
         }
