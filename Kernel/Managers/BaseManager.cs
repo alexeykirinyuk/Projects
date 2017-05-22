@@ -28,11 +28,7 @@ namespace Projects.Managers
                 }
                 catch (Exception exception)
                 {
-                    if (ManagerFactory.Debug)
-                    {
-                        ManagerFactory.Logger.Error(Tag, exception.Message);
-                        throw;
-                    }
+                    ManagerFactory.Logger.Error(Tag, exception);
                 }
             }
 

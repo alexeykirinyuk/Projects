@@ -6,8 +6,8 @@ namespace Projects.Server.Controllers
 {
     public class BaseController : Controller
     {
-        protected readonly IManager<Project> _projects = ManagerFactory.Get<Project>();
-        protected readonly IManager<Worker> _workers = ManagerFactory.Get<Worker>();
+        protected readonly ProjectsManager _projects = ManagerFactory.Get<Project>() as ProjectsManager;
+        protected readonly WorkersManager _workers = ManagerFactory.Get<Worker>() as WorkersManager;
 
         protected const string _editAction = "Edit";
 

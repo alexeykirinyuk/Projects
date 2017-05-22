@@ -13,6 +13,10 @@ function workers()
 {
     href("Workers/Index");
 }
+function tables()
+{
+    href("Start/Index");
+}
 
 function createProject()
 {
@@ -52,10 +56,10 @@ function removeWorker(id)
     href("Workers/Remove?id=" + id);
 }
 
-function sort(row)
+function sort(id, column)
 {
     var table, rows, switching, i, x, y, shouldSwitch;
-    table = document.getElementById("projects");
+    table = document.getElementById(id);
     switching = true;
 
     while (switching)
@@ -67,10 +71,21 @@ function sort(row)
         {
             shouldSwitch = false;
 
-            x = rows[i].getElementsByTagName("TD")[3];
-            y = rows[i + 1].getElementsByTagName("TD")[3];
+            x = rows[i].getElementsByTagName("TD")[column];
+            y = rows[i + 1].getElementsByTagName("TD")[column];
 
-            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase())
+            var res = false;
+
+            if (!isNaN(x.innerHTML) && !isNaN(y.innerHTML))
+            {
+                res = +(x.innerHTML) > +(y.innerHTML)
+            }
+            else
+            {
+                res = x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase();
+            }
+
+            if (res)
             {
                 shouldSwitch = true;
                 break;

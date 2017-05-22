@@ -1,9 +1,41 @@
 ﻿@model IEnumerable<Projects.Context.Project>
 
-<p>
-    <button class="btn-success" onclick="createProject()">Create New</button>
-    <button class="btn-success" onclick="sort()">Sort</button>
-</p>
+<div>
+    <div class="col-lg-3">
+        <button class="btn-success form-control" onclick="createProject()">Create New</button>
+    </div>
+    <div class="col-lg-3">
+        <button class="btn-warning form-control" onclick="tables()">Tables</button>
+    </div>
+</div><br /><br />
+<div>
+    @using (Html.BeginForm("Index", "Projects", FormMethod.Get))
+    {
+        <div class="form-group col-lg-2">
+            <label for="name">Name</label>
+            <input class="form-control" name="name" type="text" />
+        </div>
+
+        <div class="form-group col-lg-2">
+            <label for="customer">Customer</label>
+            <input class="form-control" name="customer" type="text" />
+        </div>
+
+        <div class="form-group col-lg-2">
+            <label for="constructor">Constructor</label>
+            <input class="form-control" name="constructor" type="text" />
+        </div>
+
+        <div class="form-group col-lg-2">
+            <label for="priority">Priority</label>
+            <input class="form-control" name="priority" type="text" />
+        </div>
+        <br>
+        <div class="form-group col-lg-2">
+            <button class="btn-success form-control" type="submit">Filter</button>
+        </div>
+    }
+</div>
 <table class="table" id="projects">
     <tr>
         <th>Id</th>
@@ -55,14 +87,25 @@
                 }
             </td>
             <td>
-                <button class="btn-info" onclick="detailsProject(@item.Id)">Details</button>
+                <button class="btn-info form-control" onclick="detailsProject(@item.Id)">Details</button>
             </td>
             <td>
-                <button class="btn-warning" onclick="editProject(@item.Id)">Edit</button>
+                <button class="btn-warning form-control" onclick="editProject(@item.Id)">Edit</button>
             </td>
             <td>
-                <button class="btn-danger" onclick="removeProject(@item.Id)">Remove</button>
+                <button class="btn-danger form-control" onclick="removeProject(@item.Id)">Remove</button>
             </td>
         </tr>
     }
 </table>
+
+<script>
+    var id = "projects";
+    var projects = document.getElementById(id);
+
+    projects.onclick = function (e)
+    {
+        if (e.target.tagName != 'TH') return;
+        sort(id, e.target.cellIndex);
+    };
+</script>

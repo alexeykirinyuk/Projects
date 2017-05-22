@@ -36,14 +36,19 @@
 
         <dt>Workers</dt>
         <dd>
-        @foreach (var element in Model.Workers)
-        {
-            @element<br>
-        }
+            @foreach (var element in Model.Workers)
+            {
+                @element<br>
+            }
         </dd>
     </dl>
 </div>
-<p>
-    <button class="btn-warning" onclick="editProject(@Model.Id)">Edit</button>
-    <button class="btn-success" onclick="backToList()">Back</button>
-</p>
+<div>
+    <div class="col-lg-3">
+        <button class="btn-warning form-control" onclick="editProject(@Model.Id)">Edit</button>
+    </div>
+
+    <div class="col-lg-3">
+        <button class="btn-success form-control" onclick="projects()">Back</button>
+    </div>
+</div>

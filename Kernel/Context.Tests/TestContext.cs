@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Kernel.Tests
 {
     [TestClass]
-    public class TestContext 
+    public class TestContext
     {
         [TestMethod]
         public void Context()

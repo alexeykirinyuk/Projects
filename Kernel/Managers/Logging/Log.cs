@@ -10,7 +10,15 @@ namespace Projects.Managers.Logging
 
         public void Info(string tag, string message) => Write("Info", tag, message);
         public void Warning(string tag, string message) => Write("Warning", tag, message);
-        public void Error(string tag, string message) => Write("Error", tag, message);
+        public void Error(string tag, Exception exception)
+        {
+            Write("Error", tag, exception.Message);
+
+            if (ManagerFactory.Debug)
+            {
+                throw exception;
+            }
+        }
 
         private static void Write(string type, string tag, string message)
         {
@@ -18,7 +26,7 @@ namespace Projects.Managers.Logging
             {
                 using (var stream = new StreamWriter(new FileStream(_path, FileMode.Append, FileAccess.Write)))
                 {
-                    stream.Write($"[{type}] {DateTime.Now} ({tag}): {message}");
+                    stream.WriteLine($"[{type}] {DateTime.Now} ({tag}): {message}");
                 }
             }
         }

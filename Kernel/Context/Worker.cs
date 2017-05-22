@@ -39,12 +39,17 @@ namespace Projects.Context
             this.ProjectEmployee = new HashSet<Project>();
             this.ProjectLeader = new HashSet<Project>();
             this.ProjectWoker = new HashSet<Project>();
+
+            FirstName = string.Empty;
+            LastName = string.Empty;
+            MiddleName = string.Empty;
+            Email = string.Empty;
         }
         public Worker(string firstName, string lastName, string middleName, string email) : this()
         {
             FirstName = firstName;
             LastName = lastName;
-            MiddleName = MiddleName;
+            MiddleName = middleName;
             Email = email;
         }
 

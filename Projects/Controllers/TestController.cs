@@ -32,7 +32,7 @@ namespace Projects.Server.Controllers
             var worker4 = new Worker("Gulzan", "Mucusheva", "Privet", "gix@yandex.ru");
 
             worker1 = _workers.Add(worker1);
-            worker2 =_workers.Add(worker2);
+            worker2 = _workers.Add(worker2);
             worker3 = _workers.Add(worker3);
             worker4 = _workers.Add(worker4);
 
@@ -41,7 +41,7 @@ namespace Projects.Server.Controllers
                 Comment = "test work",
                 Employee = worker1,
                 Leader = worker2,
-                Priority = 10,
+                Priority = 1,
                 Start = DateTime.Now,
                 End = DateTime.Now,
                 Workers = new List<Worker>() { worker1, worker4 }
@@ -56,9 +56,31 @@ namespace Projects.Server.Controllers
                 End = DateTime.Now,
                 Workers = new List<Worker>() { worker1, worker3 }
             };
+            var project3 = new Project("microsoft word", "Microsoft", "Gaiist")
+            {
+                Comment = "test work",
+                Employee = worker1,
+                Leader = worker2,
+                Priority = 23,
+                Start = DateTime.Now,
+                End = DateTime.Now,
+                Workers = new List<Worker>() { worker2, worker3 }
+            };
+            var project4 = new Project("Open office", "lin", "sibers")
+            {
+                Comment = "test",
+                Employee = worker3,
+                Leader = worker4,
+                Priority = 17,
+                Start = DateTime.Now,
+                End = DateTime.Now,
+                Workers = new List<Worker>() { worker3, worker1 }
+            };
 
             _projects.Add(project1);
             _projects.Add(project2);
+            _projects.Add(project3);
+            _projects.Add(project4);
         }
     }
 }

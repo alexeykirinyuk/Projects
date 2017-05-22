@@ -1,5 +1,4 @@
 ﻿using Projects.Context;
-using Projects.Managers;
 using System.Web.Mvc;
 
 namespace Projects.Server.Controllers
@@ -7,9 +6,11 @@ namespace Projects.Server.Controllers
     public class ProjectsController : BaseController
     {
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string name = null, string customer = null, string constructor = null, int? priority = null)
         {
-            return View(_projects.GetAll());
+            var result = _projects.Filter(name, customer, constructor, priority);
+
+            return View(result);
         }
 
         [HttpGet]

@@ -84,6 +84,32 @@ namespace Projects.Managers
 
             return result;
         }
+        public IEnumerable<Project> Filter(string name = null, string customer = null, string constructor = null, int? priority = null)
+        {
+            return WOperationGet(projects =>
+            {
+                var result = projects.AsEnumerable();
+
+                if (!string.IsNullOrEmpty(name))
+                {
+                    result = result.Where(p => p.Name.Contains(name));
+                }
+                if (!string.IsNullOrEmpty(customer))
+                {
+                    result = result.Where(p => null != p.CustomerCompany ? p.CustomerCompany.Contains(customer) : false);
+                }
+                if (!string.IsNullOrEmpty(constructor))
+                {
+                    result = result.Where(p => null != p.ConstractorCompany ? p.ConstractorCompany.Contains(constructor) : false);
+                }
+                if (priority.HasValue)
+                {
+                    result = result.Where(p => p.Priority > priority.Value);
+                }
+
+                return result.ToList();
+            });
+        }
 
         private TDataType WOperationGet<TDataType>(Func<IEnumerable<Project>, TDataType> action)
         {
@@ -96,7 +122,14 @@ namespace Projects.Managers
                     .Include(p => p.Leader)
                     .Include(p => p.Workers);
 
-                result = action(projects);
+                try
+                {
+                    result = action(projects);
+                }
+                catch (Exception exception)
+                {
+                    ManagerFactory.Logger.Error(Tag, exception);
+                }
             }
 
             return result;
