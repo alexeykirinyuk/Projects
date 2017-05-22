@@ -27,24 +27,31 @@ namespace Projects.Managers
         {
             return Operation(context =>
             {
-                var leaders = context.ProjectsBase.Where(p => id == p.LeaderId);
-                
-                foreach (var leader in leaders)
+                var remove = context.WorkersBase.FirstOrDefault(w => id == w.Id);
+
+                var projects = context.ProjectsBase.Where(p => id == p.LeaderId);
+                foreach (var leader in projects)
                 {
                     leader.Leader = null;
                 }
 
-                var employees = context.ProjectsBase.Where(p => id == p.EmployeeId);
-
-                foreach (var employee in employees)
+                projects = context.ProjectsBase.Where(p => id == p.EmployeeId);
+                foreach (var employee in projects)
                 {
                     employee.Employee = null;
                 }
 
-                var employees = context.ProjectsBase.Where(p => id == p.EmployeeId);
+                foreach (var project in context.ProjectsBase)
+                {
+                    var worker = project.Workers.FirstOrDefault(w => id == w.Id);
 
+                    if (null != worker)
+                    {
+                        project.Workers.Remove(worker);
+                    }
+                }
 
-                return context.Remove(context.FirstOrDefault(w => id == w.Id));
+                return context.WorkersBase.Remove(remove);
             });
         }
 

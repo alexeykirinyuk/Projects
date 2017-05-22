@@ -81,8 +81,11 @@ namespace Kernel.Tests
         [TestMethod]
         public void Remove()
         {
-            ProjectsManager.Remove(Project1.Id);
-            Assert.AreEqual(1, ProjectsManager.GetAll().Count());
+            var project = ProjectsManager.Remove(Project1.Id);
+            Assert.IsNotNull(project);
+
+            project = ProjectsManager.Find(Project1.Id);
+            Assert.IsNull(project);
         }
     }
 }

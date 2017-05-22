@@ -42,5 +42,15 @@ namespace Kernel.Tests
             Assert.AreEqual(added.MiddleName, worker.MiddleName);
             Assert.AreEqual(added.Email, worker.Email);
         }
+
+        [TestMethod]
+        public void Remove()
+        {
+            var worker = WorkersManager.Remove(Worker1.Id);
+            Assert.IsNotNull(worker);
+
+            worker = WorkersManager.Find(Worker1.Id);
+            Assert.IsNull(worker);
+        }
     }
 }
