@@ -14,26 +14,6 @@ namespace Projects.Context
     
     public partial class Project
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Project()
-        {
-            this.Workers = new HashSet<Worker>();
-
-            Name = string.Empty;
-            CustomerCompany = string.Empty;
-            ConstractorCompany = string.Empty;
-            Start = DateTime.Now;
-            End = DateTime.Now;
-            Priority = 1;
-            Comment = string.Empty;
-        }
-        public Project(string name, string customer, string constructor): this()
-        {
-            Name = name;
-            CustomerCompany = customer;
-            ConstractorCompany = constructor;
-        }
-    
         public long Id { get; set; }
         public string Name { get; set; }
         public string CustomerCompany { get; set; }
@@ -49,5 +29,41 @@ namespace Projects.Context
         public virtual Worker Leader { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Worker> Workers { get; set; }
+        public virtual List<long> WorkerIds { get; set; }
+
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Project()
+        {
+            this.Workers = new HashSet<Worker>();
+
+            Name = string.Empty;
+            CustomerCompany = string.Empty;
+            ConstractorCompany = string.Empty;
+            Start = DateTime.Now;
+            End = DateTime.Now;
+            Priority = 1;
+            Comment = string.Empty;
+            WorkerIds = new List<long>();
+        }
+        public Project(string name, string customer, string constructor) : this()
+        {
+            Name = name;
+            CustomerCompany = customer;
+            ConstractorCompany = constructor;
+        }
+
+        public Project Update(Project project)
+        {
+            Name = project.Name;
+            CustomerCompany = project.CustomerCompany;
+            ConstractorCompany = project.ConstractorCompany;
+            Start = project.Start;
+            End = project.End;
+            Priority = project.Priority;
+            Comment = project.Comment;
+
+            return this;
+        }
     }
 }

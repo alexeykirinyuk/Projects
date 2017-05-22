@@ -1,0 +1,49 @@
+﻿@model Projects.Context.Project
+
+<div>
+    <h4>Project #@Model.Id</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Id</dt>
+        <dd>@Model.Id</dd>
+
+        <dt>Name</dt>
+        <dd>@Model.Name</dd>
+
+        <dt>Customer</dt>
+        <dd>@Model.CustomerCompany</dd>
+
+        <dt>Constractor</dt>
+        <dd>@Model.ConstractorCompany</dd>
+
+        <dt>Start date</dt>
+        <dd>@Model.Start</dd>
+
+        <dt>End</dt>
+        <dd>@Model => model.End</dd>
+
+        <dt>Priority</dt>
+        <dd>@Model.Priority</dd>
+
+        <dt>Comment</dt>
+        <dd>@Model.Comment</dd>
+
+        <dt>Employee</dt>
+        <dd>@Model.Employee</dd>
+
+        <dt>Leader</dt>
+        <dd>@Model.Leader</dd>
+
+        <dt>Workers</dt>
+        <dd>
+        @foreach (var element in Model.Workers)
+        {
+            @element<br>
+        }
+        </dd>
+    </dl>
+</div>
+<p>
+    <button class="btn-warning" onclick="editProject(@Model.Id)">Edit</button>
+    <button class="btn-success" onclick="backToList()">Back</button>
+</p>

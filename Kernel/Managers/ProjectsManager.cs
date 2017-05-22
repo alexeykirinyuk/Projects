@@ -6,22 +6,48 @@ using System.Linq;
 
 namespace Projects.Managers
 {
-    public class ProjectsManager
+    public class ProjectsManager : IManager<Project>
     {
         public ProjectsManager() { }
 
-        public IEnumerable<Project> GetAll() => Operation((projects) => projects.ToList());
+        public IEnumerable<Project> GetAll() => OperationGet((projects) => projects.ToList());
         public Project Find(long id)
         {
-            return Operation(projects =>
+            return OperationGet(projects =>
             {
                 return projects.FirstOrDefault(p => id == p.Id);
             });
         }
 
-        public Project Add(Project project) => Operation(projects => projects.Add(project));
+        public Project Add(Project project) => OperationSet(context => context.ProjectsBase.Add(project));
+        public Project Update(Project project)
+        {
+            return OperationSet(context =>
+            {
+                var entity = context.ProjectsBase.Find(project.Id);
+                entity.Update(project);
 
-        private TDataType Operation<TDataType>(Func<IEnumerable<Project>, TDataType> action)
+                entity.Employee = context.WorkersBase.Find(project.EmployeeId);
+                entity.Leader = context.WorkersBase.Find(project.LeaderId);
+                entity.Workers.Clear();
+
+                foreach (var id in project.WorkerIds)
+                {
+                    entity.Workers.Add(context.WorkersBase.Find(id));
+                }
+
+                return entity;
+            });
+        }
+        public Project Remove(long id)
+        {
+            return OperationSet(context =>
+            {
+                return context.ProjectsBase.Remove(context.ProjectsBase.Find(id));
+            });
+        }
+
+        private TDataType OperationGet<TDataType>(Func<IEnumerable<Project>, TDataType> action)
         {
             var result = default(TDataType);
 
@@ -37,13 +63,13 @@ namespace Projects.Managers
 
             return result;
         }
-        private TDataType Operation<TDataType>(Func<DbSet<Project>, TDataType> action)
+        private TDataType OperationSet<TDataType>(Func<ProjectsEntities, TDataType> action)
         {
             var result = default(TDataType);
 
             using (var context = new ProjectsEntities())
             {
-                result = action(context.ProjectsBase);
+                result = action(context);
                 context.SaveChanges();
             }
 

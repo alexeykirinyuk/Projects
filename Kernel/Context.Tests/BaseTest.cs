@@ -2,6 +2,7 @@
 using Projects.Context;
 using Projects.Managers;
 using System;
+using System.Collections.Generic;
 
 namespace Kernel.Tests
 {
@@ -13,8 +14,8 @@ namespace Kernel.Tests
         protected Project Project1 { get; set; }
         protected Project Project2 { get; set; }
 
-        protected ProjectsManager ProjectsManager { get; set; }
-        protected WorkersManager WorkersManager { get; set; }
+        protected IManager<Project> ProjectsManager { get; set; }
+        protected IManager<Worker> WorkersManager { get; set; }
 
         public BaseTest()
         {
@@ -28,7 +29,8 @@ namespace Kernel.Tests
                 Leader = Worker2,
                 Priority = 10,
                 Start = DateTime.Now,
-                End = DateTime.Now
+                End = DateTime.Now,
+                Workers = new List<Worker>() { Worker1, Worker2 }
             };
             Project2 = new Project("n2", "c2", "c2")
             {
@@ -37,11 +39,12 @@ namespace Kernel.Tests
                 Leader = Worker2,
                 Priority = 10,
                 Start = DateTime.Now,
-                End = DateTime.Now
+                End = DateTime.Now,
+                Workers = new List<Worker>() { Worker1, Worker2 }
             };
 
-            ProjectsManager = new ProjectsManager();
-            WorkersManager = new WorkersManager();
+            ProjectsManager = ManagerFactory.Get<Project>();
+            WorkersManager = ManagerFactory.Get<Worker>();
         }
 
         [TestInitialize]
@@ -60,7 +63,7 @@ namespace Kernel.Tests
                 context.WorkersBase.Add(Worker1);
                 context.WorkersBase.Add(Worker2);
                 context.SaveChanges();
-                
+
                 context.ProjectsBase.Add(Project1);
                 context.ProjectsBase.Add(Project2);
                 context.SaveChanges();

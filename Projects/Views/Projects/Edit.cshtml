@@ -1,50 +1,83 @@
-﻿@model Projects.DataTypes.Project
+﻿@model Projects.Context.Project
+@using Projects.Context;
+@{
+    var allWorkers = ViewBag.AllWorkers as IEnumerable<Worker>;
+}
 
-<h3>Project Id: @Model.Id</h3>
-
-<div class="form-group">
-    <label for="Name">Name:</label>
-    <input id="Name" class="form-control" type="text" value="@Model.Name" />
-</div>
-
-<div class="form-group">
-    <label for="CustomerCompany">Customer company:</label>
-    <input id="CustomerCompany" class="form-control" type="text" value="@Model.CustomerCompany" />
-</div>
-
-<div class="form-group">
-    <label for="ConstractorCompany">Constractor company:</label>
-    <input id="ConstractorCompany" class="form-control" type="text" value="@Model.ConstractorCompany" />
-</div>
-
-<div class="form-group">
-    <label>Leader: @Model.Leader</label>
-</div>
-
-<div class="form-group">
-    <label>Constractor company: @Model.Employee</label>
-</div>
-
-<div class="form-group">
-    <label>Constractors:</label>
-
-    @foreach (var constructor in Model.Contractors)
-    {
-        <label>@constructor</label>
-    }
-</div>
-
-<div class="form-group">
-    <label for="Start">Start date:</label>
-    <input id="Start" class="form-control" type="date" value="@Model.Start.ToString("yyyy-MM-dd")" />
-</div>
-
-<div class="form-group">
-    <label for="End">End date:</label>
-    <input id="End" class="form-control" type="date" value="@Model.End.ToString("yyyy-MM-dd")" />
-</div>
-
-<div class="form-group">
-    <label for="Comment">Comment:</label>
-    <textarea id="Comment" class="form-control" rows="5">@Model.Comment</textarea>
-</div>
+@using (Html.BeginForm("Update", "Projects", new { Id = Model.Id }, FormMethod.Post))
+{
+    <h3>Project #@Model.Id</h3>
+    <div class="form-group">
+        <label for="Name">Name:</label>
+        <input name="Name" class="form-control" type="text" value="@Model.Name" />
+    </div>
+    <div class="form-group">
+        <label for="CustomerCompany">Customer company:</label>
+        <input name="CustomerCompany" class="form-control" type="text" value="@Model.CustomerCompany" />
+    </div>
+    <div class="form-group">
+        <label for="ConstractorCompany">Constractor company:</label>
+        <input name="ConstractorCompany" class="form-control" type="text" value="@Model.ConstractorCompany" />
+    </div>
+    <div class="form-group">
+        <label>Leader</label>
+        <select name="LeaderId" class="form-control">
+            @foreach (var worker in allWorkers)
+            {
+                if (@Model.LeaderId == worker.Id)
+                {
+                    <option value="@worker.Id" selected>@worker</option>
+                }
+                else
+                {
+                    <option value="@worker.Id">@worker</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Employee</label>
+        <select name="EmployeeId" class="form-control">
+            @foreach (var worker in allWorkers)
+            {
+                if (@Model.EmployeeId == worker.Id)
+                {
+                    <option value="@worker.Id" selected>@worker</option>
+                }
+                else
+                {
+                    <option value="@worker.Id">@worker</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Constractors:</label><br>
+        @foreach (var worker in allWorkers)
+        {
+            <div class="checkbox">
+                @if (null != Model.Workers.FirstOrDefault(w => w.Id == worker.Id))
+                {
+                    <label><input type="checkbox" name="WorkerIds" value="@worker.Id" checked>@worker<br></label>
+                }
+                else
+                {
+                    <label><input type="checkbox" name="WorkerIds" value="@worker.Id">@worker<br></label>
+                }
+            </div>
+        }
+    </div>
+    <div class="form-group">
+        <label for="Start">Start date:</label>
+        <input name="Start" class="form-control" type="date" value="@Model.Start.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="form-group">
+        <label for="End">End date:</label>
+        <input name="End" class="form-control" type="date" value="@Model.End.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="form-group">
+        <label for="Comment">Comment:</label>
+        <textarea name="Comment" class="form-control" rows="5">@Model.Comment</textarea>
+    </div>
+    <button class="btn-success" type="submit">Save</button>
+}

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Projects.Managers
 {
-    public class WorkersManager
+    public class WorkersManager : IManager<Worker>
     {
         public WorkersManager() { }
 
@@ -14,6 +14,23 @@ namespace Projects.Managers
         public Worker Find(long id) => Operation(workers => workers.FirstOrDefault(w => id == w.Id));
 
         public Worker Add(Worker worker) => Operation(workers => workers.Add(worker));
+        public Worker Update(Worker worker)
+        {
+            return Operation(workers =>
+            {
+                var entity = workers.Find(worker.Id);
+
+                return entity.Update(worker);
+            });
+        }
+        public Worker Remove(long id)
+        {
+            return Operation(workers =>
+            {
+                return workers.Remove(workers.FirstOrDefault(w => id == w.Id));
+            }
+            );
+        }
 
         private TDataType Operation<TDataType>(Func<DbSet<Worker>, TDataType> action)
         {
