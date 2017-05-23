@@ -9,15 +9,15 @@
     <div class="col-lg-5">
         <h3>Project #@Model.Id</h3>
         <div class="form-group">
-            <label for="Name">Name:</label>
+            <label for="Name">Name</label>
             <input name="Name" class="form-control" type="text" value="@Model.Name" />
         </div>
         <div class="form-group">
-            <label for="CustomerCompany">Customer company:</label>
+            <label for="CustomerCompany">Customer company</label>
             <input name="CustomerCompany" class="form-control" type="text" value="@Model.CustomerCompany" />
         </div>
         <div class="form-group">
-            <label for="ConstractorCompany">Constractor company:</label>
+            <label for="ConstractorCompany">Constractor company</label>
             <input name="ConstractorCompany" class="form-control" type="text" value="@Model.ConstractorCompany" />
         </div>
         <div class="form-group">
@@ -53,7 +53,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label>Constractors:</label><br>
+            <label>Constractors</label><br>
             @foreach (var worker in allWorkers)
             {
                 <div class="checkbox">
@@ -69,19 +69,19 @@
             }
         </div>
         <div class="form-group">
-            <label for="Priority">Start date:</label>
+            <label for="Priority">Priority</label>
             <input name="Priority" class="form-control" type="number" value="@Model.Priority" />
         </div>
         <div class="form-group">
-            <label for="Start">Start date:</label>
+            <label for="Start">Start date</label>
             <input name="Start" class="form-control" type="date" value="@Model.Start.ToString("yyyy-MM-dd")" />
         </div>
         <div class="form-group">
-            <label for="End">End date:</label>
+            <label for="End">End date</label>
             <input name="End" class="form-control" type="date" value="@Model.End.ToString("yyyy-MM-dd")" />
         </div>
         <div class="form-group">
-            <label for="Comment">Comment:</label>
+            <label for="Comment">Comment</label>
             <textarea name="Comment" class="form-control" rows="5">@Model.Comment</textarea>
         </div>
         <div class="form-group col-lg-2">
