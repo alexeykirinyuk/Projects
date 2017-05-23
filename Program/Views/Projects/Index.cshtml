@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Projects.Context.Project>
+
+<div>
+    <div class="col-lg-3">
+        <button class="btn-success form-control" onclick="createProject()">Create New</button>
+    </div>
+    <div class="col-lg-3">
+        <button class="btn-warning form-control" onclick="tables()">Tables</button>
+    </div>
+</div><br /><br />
+<div>
+    @using (Html.BeginForm("Index", "Projects", FormMethod.Get))
+    {
+        <div class="form-group col-lg-2">
+            <label for="name">Name</label>
+            <input class="form-control" name="name" type="text" />
+        </div>
+
+        <div class="form-group col-lg-2">
+            <label for="customer">Customer</label>
+            <input class="form-control" name="customer" type="text" />
+        </div>
+
+        <div class="form-group col-lg-2">
+            <label for="constructor">Constructor</label>
+            <input class="form-control" name="constructor" type="text" />
+        </div>
+
+        <div class="form-group col-lg-2">
+            <label for="priority">Priority</label>
+            <input class="form-control" name="priority" type="text" />
+        </div>
+        <br>
+        <div class="form-group col-lg-2">
+            <button class="btn-success form-control" type="submit">Filter</button>
+        </div>
+    }
+</div>
+<table class="table" id="projects">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Customer</th>
+        <th>Constractor</th>
+        <th>Start date</th>
+        <th>End date</th>
+        <th>Priority</th>
+        <th>Comment</th>
+        <th>Leader</th>
+        <th>Employee</th>
+        <th>Workers</th>
+        <th>Details</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.CustomerCompany</td>
+            <td>@item.ConstractorCompany </td>
+            <td>@item.Start</td>
+            <td>@item.End</td>
+            <td>@item.Priority</td>
+            <td>@item.Comment</td>
+            <td>
+                @if (null != item.Leader)
+                {
+                    @item.Leader
+                }
+            </td>
+            <td>
+                @if (null != item.Employee)
+                {
+                    @item.Employee
+                }
+            </td>
+            <td>
+                @if (null != item.Workers)
+                {
+                    foreach (var element in item.Workers)
+                    {
+                        @element<br>
+                    }
+                }
+            </td>
+            <td>
+                <button class="btn-info form-control" onclick="detailsProject(@item.Id)">Details</button>
+            </td>
+            <td>
+                <button class="btn-warning form-control" onclick="editProject(@item.Id)">Edit</button>
+            </td>
+            <td>
+                <button class="btn-danger form-control" onclick="removeProject(@item.Id)">Remove</button>
+            </td>
+        </tr>
+    }
+</table>
+
+<script>
+    var id = "projects";
+    var projects = document.getElementById(id);
+
+    projects.onclick = function (e)
+    {
+        if (e.target.tagName != 'TH') return;
+        sort(id, e.target.cellIndex);
+    };
+</script>

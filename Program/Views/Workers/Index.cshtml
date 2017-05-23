@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Projects.Context.Worker>
+
+<div>
+    <div class="col-lg-3">
+        <button class="btn-success form-control" onclick="createWorker()">Create New</button>
+    </div>
+    <div class="col-lg-3">
+        <button class="btn-warning form-control" onclick="tables()">Tables</button>
+    </div>
+</div><br /><br />
+<table class="table" id="workers">
+    <tr>
+        <th>Id</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Middle name</th>
+        <th>Email</th>
+        <th>Details</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.FirstName</td>
+        <td>@item.LastName</td>
+        <td>@item.MiddleName</td>
+        <td>@item.Email</td>
+        <td>
+            <button class="btn-info form-control" onclick="detailsWorker(@item.Id)">Details</button>
+        </td>
+        <td>
+            <button class="btn-warning form-control" onclick="editWorker(@item.Id)">Edit</button>
+        </td>
+        <td>
+            <button class="btn-danger form-control" onclick="removeWorker(@item.Id)">Remove</button>
+        </td>
+    </tr>
+}
+</table>
+
+<script>
+    var id = "workers";
+    var workersTable = document.getElementById(id);
+
+    workersTable.onclick = function (e)
+    {
+        if (e.target.tagName != 'TH') return;
+        sort(id, e.target.cellIndex);
+    };
+</script>
